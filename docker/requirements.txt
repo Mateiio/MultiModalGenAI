@@ -1,0 +1,11 @@
+# https://huggingface.co/microsoft/Phi-3.5-vision-instructflash_attn==2.5.8
+numpy==1.24.4
+Pillow==10.3.0
+Requests==2.31.0
+torch==2.3.0
+torchvision==0.18.0
+#transformers==4.43.0
+accelerate==0.30.0
+jupyterlab
+matplotlib
+openai

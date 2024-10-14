@@ -36,13 +36,36 @@ Receiving objects: 100% (5/5), done.
 
 https://github.com/microsoft/Phi-3CookBook
 https://azure.microsoft.com/en-us/blog/new-models-added-to-the-phi-3-family-available-on-microsoft-azure/
+https://medium.com/@researchgraph/what-is-phi-3-5-vision-101ce7c4d410
+#https://github.com/pytorch/pytorch/blob/main/Dockerfile
+https://hub.docker.com/r/huggingface/transformers-pytorch-gpu/dockerfile
+https://hub.docker.com/r/huggingface/transformers-pytorch-gpu/
+
+
 
 
 https://discuss.huggingface.co/t/need-example-docker-file-with-gpu-support/57747/3
 https://huggingface.co/spaces/SpacesExamples/llama-cpp-python-cuda-gradio/blob/main/Dockerfile
+https://github.com/ollama/ollama/blob/main/Dockerfile
 
 https://huggingface.co/spaces/SpacesExamples/Gradio-Docker-Template-nvidia-cuda/blob/main/Dockerfile
 https://hub.docker.com/r/nvidia/cuda/tags
 #FROM nvidia/cuda:12.1.1-cudnn8-devel-ubuntu22.04
 FROM nvidia/cuda:12.6.1-cudnn-devel-ubuntu22.04
+
+
+munix@DESKTOP-FQLOSI3:/mnt/c/crtUsers/[..]/pers/matei/repos/MultiModalGenAI/docker$ cd /mnt/c/crtUsers/[..]/pers/matei/repos/MultiModalGenAI/docker
+munix@DESKTOP-FQLOSI3:/mnt/c/crtUsers/[..]/pers/matei/repos/MultiModalGenAI/docker$ docker build -t mmgenai .
+
+cd ./../../
+munix@DESKTOP-FQLOSI3:/mnt/c/crtUsers/[..]/pers/matei/repos$
+docker run \
+-it \
+--rm \
+--gpus all \
+--name mmgenaicntnr \
+-p 8890:8888 \
+-v $(pwd):/workspace:rw \
+mmgenai \
+/bin/bash -c "jupyter lab --notebook-dir=/ --ip='*' --port=8888 --no-browser --allow-root"
 
