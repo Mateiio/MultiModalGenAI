@@ -1,3 +1,6 @@
+munix@DESKTOP-FQLOSI3:/mnt/c/crtUsers/../pers/matei/repos/MultiModalGenAI$ git config  user.email "matei.p.iordanescu@gmail.com"
+munix@DESKTOP-FQLOSI3:/mnt/c/crtUsers/../pers/matei/repos/MultiModalGenAI$ git config  user.name "matei iordanescu"
+
 munix@DESKTOP-FQLOSI3:/mnt/c/crtUsers/../pers/matei/repos$ /usr/local/cuda/bin/nvcc --version
 nvcc: NVIDIA (R) Cuda compiler driver
 Copyright (c) 2005-2024 NVIDIA Corporation
@@ -13,7 +16,7 @@ Sun Oct 13 20:33:27 2024
 | NVIDIA-SMI 561.09                 Driver Version: 561.09         CUDA Version: 12.6     |
 |-----------------------------------------+------------------------+----------------------+
 
-munix@DESKTOP-FQLOSI3:/mnt/c/crtUsers/George/pers/matei/repos$ dpkg --print-architecture
+munix@DESKTOP-FQLOSI3:/mnt/c/crtUsers/[..]/pers/matei/repos$ dpkg --print-architecture
 amd64
 __________________________________________________________________________________________
 
@@ -33,6 +36,10 @@ Receiving objects: 100% (5/5), done.
 
 https://github.com/microsoft/Phi-3CookBook
 https://azure.microsoft.com/en-us/blog/new-models-added-to-the-phi-3-family-available-on-microsoft-azure/
+
+
+https://discuss.huggingface.co/t/need-example-docker-file-with-gpu-support/57747/3
+https://huggingface.co/spaces/SpacesExamples/llama-cpp-python-cuda-gradio/blob/main/Dockerfile
 
 https://huggingface.co/spaces/SpacesExamples/Gradio-Docker-Template-nvidia-cuda/blob/main/Dockerfile
 https://hub.docker.com/r/nvidia/cuda/tags
