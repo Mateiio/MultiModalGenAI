@@ -10,11 +10,28 @@ Build cuda_12.6.r12.6/compiler.34714021_0
 
 munix@DESKTOP-FQLOSI3:/mnt/c/crtUsers/../pers/matei/repos$ cat /usr/local/cuda/version.json
 
-C:\crtUsers\..\pers\matei\repos\MultiModalGenAI>nvidia-smi.exe
-Sun Oct 13 20:33:27 2024
+munix@DESKTOP-FQLOSI3:/mnt/c/crtUsers/George/pers/matei/repos/MultiModalGenAI/docker$ docker run -it --rm --gpus all ubuntu  /bin/bash
+root@7f7e35d55286:/# nvidia-smi
+Sun Oct 20 00:19:42 2024
 +-----------------------------------------------------------------------------------------+
-| NVIDIA-SMI 561.09                 Driver Version: 561.09         CUDA Version: 12.6     |
+| NVIDIA-SMI 565.51.01              Driver Version: 565.90         CUDA Version: 12.7     |
 |-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce GTX 1660 ...    On  |   00000000:02:00.0 Off |                  N/A |
+|  0%   39C    P8              6W /   65W |       0MiB /   6144MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
 
 munix@DESKTOP-FQLOSI3:/mnt/c/crtUsers/[..]/pers/matei/repos$ dpkg --print-architecture
 amd64
@@ -37,6 +54,8 @@ Receiving objects: 100% (5/5), done.
 https://github.com/microsoft/Phi-3CookBook
 https://azure.microsoft.com/en-us/blog/new-models-added-to-the-phi-3-family-available-on-microsoft-azure/
 https://medium.com/@researchgraph/what-is-phi-3-5-vision-101ce7c4d410
+https://huggingface.co/microsoft/Phi-3.5-vision-instruct
+
 #https://github.com/pytorch/pytorch/blob/main/Dockerfile
 https://hub.docker.com/r/huggingface/transformers-pytorch-gpu/dockerfile
 https://hub.docker.com/r/huggingface/transformers-pytorch-gpu/
@@ -56,6 +75,8 @@ FROM nvidia/cuda:12.6.1-cudnn-devel-ubuntu22.04
 
 munix@DESKTOP-FQLOSI3:/mnt/c/crtUsers/[..]/pers/matei/repos/MultiModalGenAI/docker$ cd /mnt/c/crtUsers/[..]/pers/matei/repos/MultiModalGenAI/docker
 munix@DESKTOP-FQLOSI3:/mnt/c/crtUsers/[..]/pers/matei/repos/MultiModalGenAI/docker$ docker build -t mmgenai .
+cd /mnt/c/crtUsers/[...]/pers/matei/repos/MultiModalGenAI/docker
+docker build -t mmgenai  -f Dockerfile.MMGenAI . 
 
 cd ./../../
 munix@DESKTOP-FQLOSI3:/mnt/c/crtUsers/[..]/pers/matei/repos$

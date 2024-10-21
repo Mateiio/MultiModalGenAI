@@ -1,0 +1,54 @@
+From https://github.com/tensorflow/build/tree/master/tensorflow_runtime_dockerfiles
+gpu.Dockerfile
+setup.sources.sh
+setup.packages.sh
+gpu.packages.txt
+
+setup.python.sh
+gpu.requirements.txt
+setup.cuda.sh
+
+bashrc
+
+jupyter.requirements.txt
+setup.jupyter.sh
+
+
+_________________________________________________
+docker build --target=base --build-arg TENSORFLOW_PACKAGE=tf-nightly-cpu -t tensorflow-nightly -f cpu.Dockerfile .
+docker build -f gpu.Dockerfile --target=base --build-arg="TENSORFLOW_PACKAGE=tensorflow~=2.13.0" . -t tensorflow/custom-runtime:2.13-python3.11
+
+
+docker build -f gpu.Dockerfile --target=jupyter --build-arg="TENSORFLOW_PACKAGE=tensorflow~=2.13.0" --build-arg="PYTHON_VERSION=python3.12" . -t tf2.13p3.12gpu
+
+docker run --gpus all -it --rm  tf2.13gpu /bin/bash
+
+
+python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))" -> [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+
+in docker run --gpus all -it --rm  tensorflow/tensorflow:2.17.0-gpu-jupyter /bin/bash
+python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))" -> [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+root@44042aadbcf6:/tf# nvcc --version
+	nvcc: NVIDIA (R) Cuda compiler driver
+	Copyright (c) 2005-2023 NVIDIA Corporation
+	Built on Wed_Nov_22_10:17:15_PST_2023
+	Cuda compilation tools, release 12.3, V12.3.107
+	Build cuda_12.3.r12.3/compiler.33567101_0
+root@44042aadbcf6:/tf# ls -l /usr/local | grep cuda
+	lrwxrwxrwx 1 root root   22 Nov  9  2023 cuda -> /etc/alternatives/cuda
+	lrwxrwxrwx 1 root root   25 Nov  9  2023 cuda-12 -> /etc/alternatives/cuda-12
+	drwxr-xr-x 1 root root 4096 Jul 12 12:39 cuda-12.3
+root@44042aadbcf6:/tf# nvidia-smi
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 565.51.01              Driver Version: 565.90         CUDA Version: 12.7     |
+|-----------------------------------------+------------------------+----------------------+
+|=========================================+========================+======================|
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+|   0  NVIDIA GeForce GTX 1660 ...    On  |   00000000:02:00.0 Off |                  N/A |
+
+
+cd /mnt/c/crtUsers/[...]/pers/matei/repos/MultiModalGenAI/docker
+docker build -t mmgenai  -f Dockerfile.MMGenAI . 
+
+docker run --gpus all -it --rm  mmgenai /bin/bash
+python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))" -> [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
