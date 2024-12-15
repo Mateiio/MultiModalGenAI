@@ -90,3 +90,5 @@ docker run \
 mmgenai \
 /bin/bash -c "jupyter lab --notebook-dir=/ --ip='*' --port=8888 --no-browser --allow-root"
 
+http://127.0.0.1:8890/lab
+

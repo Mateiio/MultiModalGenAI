@@ -4,3 +4,4 @@ Pillow
 openai
 opencv-python
 git+https://github.com/openai/CLIP.git
+torchgeo
