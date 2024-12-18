@@ -74,12 +74,12 @@ FROM nvidia/cuda:12.6.1-cudnn-devel-ubuntu22.04
 
 
 munix@DESKTOP-FQLOSI3:/mnt/c/crtUsers/[..]/pers/matei/repos/MultiModalGenAI/docker$ cd /mnt/c/crtUsers/[..]/pers/matei/repos/MultiModalGenAI/docker
-munix@DESKTOP-FQLOSI3:/mnt/c/crtUsers/[..]/pers/matei/repos/MultiModalGenAI/docker$ docker build -t mmgenai .
+munix@DESKTOP-FQLOSI3:/mnt/c/crtUsers/[..]/pers/matei/repos/MultiModalGenAI/docker$ docker build -t mmgenai . --no-cache
 cd /mnt/c/crtUsers/[...]/pers/matei/repos/MultiModalGenAI/docker
 docker build -t mmgenai  -f Dockerfile.MMGenAI . 
 
 cd ./../../
-munix@DESKTOP-FQLOSI3:/mnt/c/crtUsers/[..]/pers/matei/repos$
+munix@DESKTOP-I37HAO8:/mnt/d/crtusers/Matei/projects$
 docker run \
 -it \
 --rm \
@@ -91,4 +91,26 @@ mmgenai \
 /bin/bash -c "jupyter lab --notebook-dir=/ --ip='*' --port=8888 --no-browser --allow-root"
 
 http://127.0.0.1:8890/lab
+
+munix@DESKTOP-I37HAO8:~$ cd /mnt/d/crtusers/Matei/projects/
+munix@DESKTOP-I37HAO8:/mnt/d/crtusers/Matei/projects$
+docker run \
+-it \
+--rm \
+--gpus all \
+--name tfgpu \
+-p 8891:8888 \
+-v $(pwd):/workspace:rw \
+tensorflow/tensorflow:2.18.0-gpu-jupyter \
+/bin/bash -c "python3 -m pip install --no-cache-dir tensorflow-hub pydot ; jupyter lab --notebook-dir=/ --ip='*' --port=8888 --no-browser --allow-root"
+
+docker run \
+-it \
+--rm \
+--gpus all \
+--name tfgpu \
+-p 8891:8888 \
+-v $(pwd):/workspace:rw \
+tensorflow/tensorflow:2.18.0-gpu-jupyter \
+/bin/bash -c jupyter lab --notebook-dir=/ --ip='*' --port=8888 --no-browser --allow-root"
 
