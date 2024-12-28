@@ -10,9 +10,8 @@ Build cuda_12.6.r12.6/compiler.34714021_0
 
 munix@DESKTOP-FQLOSI3:/mnt/c/crtUsers/../pers/matei/repos$ cat /usr/local/cuda/version.json
 
-munix@DESKTOP-FQLOSI3:/mnt/c/crtUsers/George/pers/matei/repos/MultiModalGenAI/docker$ docker run -it --rm --gpus all ubuntu  /bin/bash
-root@7f7e35d55286:/# nvidia-smi
-Sun Oct 20 00:19:42 2024
+munix@DESKTOP-FQLOSI3:/mnt/c/crtUsers//pers/matei/repos/MultiModalGenAI/docker/v2$ docker run -it --rm --gpus all ubuntu  /bin/bash -c "nvidia-smi"
+Tue Dec 24 17:29:38 2024
 +-----------------------------------------------------------------------------------------+
 | NVIDIA-SMI 565.51.01              Driver Version: 565.90         CUDA Version: 12.7     |
 |-----------------------------------------+------------------------+----------------------+
@@ -21,7 +20,7 @@ Sun Oct 20 00:19:42 2024
 |                                         |                        |               MIG M. |
 |=========================================+========================+======================|
 |   0  NVIDIA GeForce GTX 1660 ...    On  |   00000000:02:00.0 Off |                  N/A |
-|  0%   39C    P8              6W /   65W |       0MiB /   6144MiB |      0%      Default |
+|  0%   39C    P8              2W /   49W |       0MiB /   6144MiB |      0%      Default |
 |                                         |                        |                  N/A |
 +-----------------------------------------+------------------------+----------------------+
 
@@ -30,7 +29,7 @@ Sun Oct 20 00:19:42 2024
 |  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
 |        ID   ID                                                               Usage      |
 |=========================================================================================|
-|  No running processes found                                                             |
+|    0   N/A  N/A       110      C   /python3.11                                 N/A      |
 +-----------------------------------------------------------------------------------------+
 
 munix@DESKTOP-FQLOSI3:/mnt/c/crtUsers/[..]/pers/matei/repos$ dpkg --print-architecture
@@ -113,4 +112,61 @@ docker run \
 -v $(pwd):/workspace:rw \
 tensorflow/tensorflow:2.18.0-gpu-jupyter \
 /bin/bash -c jupyter lab --notebook-dir=/ --ip='*' --port=8888 --no-browser --allow-root"
+
+
+munix@DESKTOP-FQLOSI3:/mnt/d/crtusers/Matei/repos/MultiModalGenAI/docker$ bash getDockerFiles.sh
+docker build -t mmgenai  -f MMGenAIgpu.Dockerfile .
+cd ./docker/v2/
+docker build -t mmgenaiv2  -f MMGenAIgpu.Dockerfilev2 .
+docker build -t mmgenaiv2  -f HFGPU.Dockerfile .
+
+
+
+wget https://raw.githubusercontent.com/huggingface/transformers/refs/heads/main/docker/transformers-all-latest-gpu/Dockerfile  --output-document=HFAllGPU.Dockerfile
+docker build -t hfallgpu  -f HFAllGPU.Dockerfile . --no-cache
+docker build -t hfallextgpu  -f HFAllGPUext.Dockerfile .  --no-cache
+cd ./../../../
+docker run \
+-it \
+--rm \
+--gpus all \
+--name hfallextgpucntnr \
+-p 8890:8888 \
+-v $(pwd):/workspace:rw \
+hfallextgpu \
+/bin/bash -c "jupyter lab --notebook-dir=/ --ip='*' --port=8888 --no-browser --allow-root"
+
+docker build -t hfallext2gpu  -f HFAllGPUext2.Dockerfile .  --no-cache
+
+
+
+C:\Windows\System32>taskkill /f /im wslservice.exe
+SUCCESS: The process "wslservice.exe" with PID 7588 has been terminated.
+
+PS C:\WINDOWS\system32> wsl --list --verbose
+  NAME      STATE           VERSION
+* Ubuntu    Stopped         2
+
+wsl.exe --system -d Ubuntu df -h /mnt/wslg/distro
+
+
+
+docker rmi $(docker images -a -q)
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+munix@DESKTOP-FQLOSI3:~$ docker image ls
+munix@DESKTOP-FQLOSI3:~$ docker container ls
+ 
+
+https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html
+
+
+
+docker run --gpus=all -it --rm --name pytorch -v $(pwd):/workspace:rw -p 8891:8888 quay.io/jupyter/pytorch-notebook:cuda12-python-3.11.8 /bin/bash -c "import torch; print(torch.cuda.is_available())"
+docker run --gpus=all -it --rm --name pytorch -v $(pwd):/workspace:rw -p 8891:8888 quay.io/jupyter/pytorch-notebook:cuda12-python-3.11.8 python3 -c "import torch; print(([(i, torch.cuda.get_device_properties(i)) for i in range(torch.cuda.device_count())]))"
+
+
+docker build -t tfgpu  -f tfgpu.Dockerfile . 
+munix@DESKTOP-FQLOSI3:~$ docker run --gpus=all -it --rm --name tfnightly -v $(pwd):/workspace:rw -p 8891:8888 tfgpu python3 -c "from tensorflow.python.client import device_lib; print(device_lib.list_local_devices())"
+
 
