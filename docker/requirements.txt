@@ -2,5 +2,6 @@ tf_keras
 tensorflow-hub   
 tensorflow_probability
 scikit-learn
+scikit-image
 seaborn
 Pillow                

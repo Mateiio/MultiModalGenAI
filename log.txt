@@ -170,3 +170,14 @@ docker build -t tfgpu  -f tfgpu.Dockerfile .
 munix@DESKTOP-FQLOSI3:~$ docker run --gpus=all -it --rm --name tfnightly -v $(pwd):/workspace:rw -p 8891:8888 tfgpu python3 -c "from tensorflow.python.client import device_lib; print(device_lib.list_local_devices())"
 
 
+docker build -t tfgpu  -f tfgpu.Dockerfile .
+cd ./../../
+docker run \
+-it \
+--rm \
+--gpus all \
+--name tfgpucntnr \
+-p 8890:8888 \
+-v $(pwd):/workspace:rw \
+tfgpu \
+/bin/bash -c "jupyter lab --notebook-dir=/ --ip='*' --port=8888 --no-browser --allow-root"
