@@ -181,3 +181,14 @@ docker run \
 -v $(pwd):/workspace:rw \
 tfgpu \
 /bin/bash -c "jupyter lab --notebook-dir=/ --ip='*' --port=8888 --no-browser --allow-root"
+
+
+
+cd mnt/d/crtusers/Matei/projects/repos/MultiModalGenAI/docker/
+docker build -t tfgpu  -f tfgpu.Dockerfile .
+cd ./../../../
+docker run --gpus=all -it --rm --name tfnightly -v $(pwd):/workspace:rw -p 8888:8888 tfgpu /bin/bash -c "jupyter lab --notebook-dir=/ --ip='*' --port=8888 --no-browser --allow-root"
+
+
+
+nvidia-smi --query-gpu=timestamp,name,pstate,utilization.gpu,temperature.gpu,utilization.memory,memory.total,memory.free,memory.used --format=csv -l 5
